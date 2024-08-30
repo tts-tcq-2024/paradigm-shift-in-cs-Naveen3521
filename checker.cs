@@ -30,7 +30,7 @@ class Checker
 
     public static bool ChargeRateChecker(float chargeRate)
     {
-        bool isInRange = chargeRate>=0.8;
+        bool isInRange = chargeRate<=0.8;
         if(!isInRange)
         {
             Console.WriteLine("Charge Rate is out of range!");
