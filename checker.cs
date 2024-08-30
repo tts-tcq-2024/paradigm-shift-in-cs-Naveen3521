@@ -8,7 +8,7 @@ class Checker
         return TemmperatureChecker(temperature) && SocChecker(soc) && ChargeRateChecker(chargeRate);
     }
 
-    public bool TemmperatureChecker(float temperature)
+    public static bool TemmperatureChecker(float temperature)
     {
        bool isInRange = temperature>=0 && temperature<=45;
         if(!isInRange)
@@ -18,7 +18,7 @@ class Checker
         return isInRange;
     }
 
-    public bool SocChecker(float soc)
+    public static bool SocChecker(float soc)
     {
        bool isInRange = soc>=20 && soc<=80;
         if(!isInRange)
@@ -28,7 +28,7 @@ class Checker
         return isInRange;
     }
 
-    public bool ChargeRateChecker(float chargeRate)
+    public static bool ChargeRateChecker(float chargeRate)
     {
         bool isInRange = chargeRate>=0.8;
         if(!isInRange)
