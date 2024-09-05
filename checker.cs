@@ -14,6 +14,7 @@ class Checker
            Console.WriteLine("State of Charge is out of range!");
         if(!checkChargeRate)
            Console.WriteLine("Charge Rate is out of range!");
+        return checkTemperature && checksoc && checkChargeRate;
     }
 
     
