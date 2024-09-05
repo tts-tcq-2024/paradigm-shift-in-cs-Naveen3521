@@ -5,39 +5,29 @@ namespace paradigm_shift_csharp
 class Checker
 {
     static bool batteryIsOk(float temperature, float soc, float chargeRate) {
-        return TemmperatureChecker(temperature) && SocChecker(soc) && ChargeRateChecker(chargeRate);
+       bool checkTemperature = ParameterInRange(0,45,temperature);
+       bool checksoc = ParameterInRange(20,80,soc);
+       bool checkChargeRate = CheckMaxValue(0.8,chargeRate);
+       if(!checkTemperature)
+           Console.Writeline("Temperature is out of range!");
+       if(!checksoc)
+           Console.WriteLine("State of Charge is out of range!");
+        if(!checkChargeRate)
+           Console.WriteLine("Charge Rate is out of range!");
     }
 
-    public static bool TemmperatureChecker(float temperature)
-    {
-       bool isInRange = temperature>=0 && temperature<=45;
-        if(!isInRange)
-        {
-            Console.WriteLine("Temperature is out of range!");
-        }
-        return isInRange;
-    }
-
-    public static bool SocChecker(float soc)
-    {
-       bool isInRange = soc>=20 && soc<=80;
-        if(!isInRange)
-        {
-            Console.WriteLine("State of Charge is out of range!");
-        }
-        return isInRange;
-    }
-
-    public static bool ChargeRateChecker(float chargeRate)
-    {
-        bool isInRange = chargeRate<=0.8;
-        if(!isInRange)
-        {
-            Console.WriteLine("Charge Rate is out of range!");
-        }
-        return isInRange;
-    }
     
+    static bool ParameterInRange(float min,float max,float value)
+    {
+        bool isInRange = value>=min && value<=CheckMaxvalue(max,value);
+        return isInRange;        
+    }
+
+    static bool CheckMaxvalue(float max, float value)
+    {
+        bool isInRange = value<=max;
+        return isInRange;
+    }
     
 
     static void ExpectTrue(bool expression) {
