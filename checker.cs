@@ -9,7 +9,7 @@ class Checker
        bool checksoc = ParameterInRange(20,80,soc);
        bool checkChargeRate = CheckMaxValue(0.8,chargeRate);
        if(!checkTemperature)
-           Console.Writeline("Temperature is out of range!");
+           Console.WriteLine("Temperature is out of range!");
        if(!checksoc)
            Console.WriteLine("State of Charge is out of range!");
         if(!checkChargeRate)
@@ -20,7 +20,7 @@ class Checker
     
     static bool ParameterInRange(float min,float max,float value)
     {
-        bool isInRange = value>=min && value<=CheckMaxvalue(max,value);
+        bool isInRange = value>=min && CheckMaxvalue(max,value);
         return isInRange;        
     }
 
