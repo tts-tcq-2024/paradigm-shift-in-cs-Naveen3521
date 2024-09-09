@@ -14,7 +14,7 @@ class Checker
     
     static bool ParameterInRange(float min,float max,float value,string errorMessage)
     {
-        bool isInRange = value>=min && CheckMaxvalue(max,value);
+        bool isInRange = value>=min && value<=max;
         if(!isInRange)
             Console.WriteLine("{0} is out of range!",errorMessage);
         return isInRange;        
