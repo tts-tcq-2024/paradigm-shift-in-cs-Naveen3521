@@ -7,7 +7,7 @@ class Checker
     static bool batteryIsOk(float temperature, float soc, float chargeRate) 
     {
      bool isBatteryok = true;
-     isbattery = ParameterInRange(0,45,temperature,"Temperature") && ParameterInRange(20,80,soc,"State of Charge") && CheckMaxValue(0.8,chargeRate,"Charge Rate");
+     isBatteryok = ParameterInRange(0,45,temperature,"Temperature") && ParameterInRange(20,80,soc,"State of Charge") && CheckMaxValue(0.8,chargeRate,"Charge Rate");
     }
 
     
