@@ -15,7 +15,7 @@ class Checker
     {
         bool isInRange = value>=min && CheckMaxvalue(max,value);
         if(!isInRange)
-            Console.WriteLine("{0} is out of range!")
+            Console.WriteLine("{0} is out of range!",errorMessage)
         return isInRange;        
     }
 
