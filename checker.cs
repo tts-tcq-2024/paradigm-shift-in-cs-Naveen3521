@@ -8,6 +8,7 @@ class Checker
     {
      bool isBatteryok = true;
      isBatteryok = ParameterInRange(0,45,temperature,"Temperature") && ParameterInRange(20,80,soc,"State of Charge") && CheckMaxValue(0.8,chargeRate,"Charge Rate");
+     return isBatteryok;
     }
 
     
