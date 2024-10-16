@@ -41,11 +41,8 @@ class Checker
 
     static void DisplayWarningMessage(float max,float value,float thresholdNumber,string errorMessage,float ?min = null)
     {
-        if(min.HasValue)
-        {
-            if(value<min+thresholdNumber)
-                Console.WriteLine("{0} is below threshold!",errorMessage);      
-        }
+        if(min.HasValue && value<min+thresholdNumber)
+            Console.WriteLine("{0} is below threshold!",errorMessage);      
         if(value>max-thresholdNumber)
             Console.WriteLine("{0} is above threshold!",errorMessage);
     }
