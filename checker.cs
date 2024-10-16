@@ -39,13 +39,12 @@ class Checker
         return (max * (thresholdPercent/100));
     }
 
-    static void DisplayWarningMessage(float max,float value,float thresholdNumber,string errorMessage,float ?min = null)
+    static void DisplayWarningMessage(float max, float value, float thresholdNumber, string errorMessage, float? min = null)
     {
-        if(min.HasValue && value<min+thresholdNumber)
-            Console.WriteLine("{0} is below threshold!",errorMessage);      
-        if(value>max-thresholdNumber)
-            Console.WriteLine("{0} is above threshold!",errorMessage);
+        if ((min.HasValue && value < min + thresholdNumber) || value > max - thresholdNumber)
+            Console.WriteLine("{0} is {1}!", errorMessage, value < min + thresholdNumber ? "below threshold" : "above threshold");
     }
+
 
     static void ExpectTrue(bool expression) {
         if(!expression) {
