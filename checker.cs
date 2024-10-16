@@ -55,7 +55,7 @@ namespace paradigm_shift_csharp
 
         static bool isInThresholdRange(float max,float value,float ?min = null)
         {
-            return min!null:value>
+           return (min.HasValue && value < min + thresholdNumber) || value > max - thresholdNumber;
         }
         static void ExpectTrue(bool expression)
         {
