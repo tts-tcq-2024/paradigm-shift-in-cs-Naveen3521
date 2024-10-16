@@ -15,8 +15,8 @@ class Checker
     static bool ParameterInRange(float max,float value,float threshholdPercent,string errorMessage,float ?min=null)
     {
         var thresholdNumber = calculateThresholdNumber(threshholdPercent,max);
-        bool isInRange = CheckinRange(max,value,thresholdNumber,errorMessag,min);
-        DisplayWarningMessage(min,max,value,thresholdNumber,errorMessage);
+        bool isInRange = CheckInRange(max,value,thresholdNumber,errorMessage,min);
+        DisplayWarningMessage(max,value,thresholdNumber,errorMessage,min);
         if(!isInRange)
             Console.WriteLine("{0} is out of range!",errorMessage);
         return isInRange;        
@@ -37,7 +37,7 @@ class Checker
         return (max * (thresholdPercent/100));
     }
 
-    static void DisplayWarningMessage(float min,float max,float value,float thresholdNumber)
+    static void DisplayWarningMessage(float max,float value,float thresholdNumber,float ?min = null)
     {
         if(min.HasValue)
         {
