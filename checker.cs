@@ -12,7 +12,7 @@ class Checker
     }
 
     
-    static bool ParameterInRange(float ?min=null,float max,float value,float threshholdPercent,string errorMessage)
+    static bool ParameterInRange(float max,float value,float threshholdPercent,string errorMessage,float ?min=null)
     {
         var thresholdNumber = calculateThresholdNumber(threshholdPercent,max);
         bool isInRange = CheckinRange(min,max,value,thresholdNumber,errorMessage);
@@ -23,7 +23,7 @@ class Checker
     }
 
     //function which dynamically checks if in range based on number of values
-    static bool CheckInRange(float ?min=null,float max,float value,float thresholdNumber,string errorMessage)
+    static bool CheckInRange(float max,float value,float thresholdNumber,string errorMessage,float ?min=null)
     {
         if(min.HasValue)
             return max<=value || min>=value;
