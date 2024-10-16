@@ -39,12 +39,19 @@ namespace paradigm_shift_csharp
             return (max * (thresholdPercent / 100));
         }
 
+        
         // Function to display warnings based on range checks
         static void DisplayWarningMessage(float max, float value, float thresholdNumber, string errorMessage, float? min = null)
         {
-            if ((min.HasValue && value < min + thresholdNumber) || value > max - thresholdNumber)
-                Console.WriteLine("{0} is {1}!", errorMessage, value < min + thresholdNumber ? "below threshold" : "above threshold");
+            bool isBelowThreshold = min.HasValue && value < min + thresholdNumber;
+            bool isAboveThreshold = value > max - thresholdNumber;
+
+            if (isBelowThreshold || isAboveThreshold)
+            {
+                Console.WriteLine("{0} is {1}!", errorMessage, isBelowThreshold ? "below threshold" : "above threshold");
+            }
         }
+
 
         static void ExpectTrue(bool expression)
         {
