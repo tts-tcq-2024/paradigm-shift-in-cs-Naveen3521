@@ -37,7 +37,7 @@ class Checker
         return (max * (thresholdPercent/100));
     }
 
-    static void DisplayWarningMessage(float max,float value,float thresholdNumber,float ?min = null)
+    static void DisplayWarningMessage(float max,float value,float thresholdNumber,string errorMessage,float ?min = null)
     {
         if(min.HasValue)
         {
