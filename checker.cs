@@ -4,11 +4,13 @@ namespace paradigm_shift_csharp
 {
 class Checker
 {
-    static bool batteryIsOk(float temperature,float tempThresholdPercent, float soc,float socThresholdPercent, float chargeRate,float chargeRateThresholdPercent) 
+    static bool batteryIsOk(float temperature, float tempThresholdPercent, float soc, float socThresholdPercent, float chargeRate, float chargeRateThresholdPercent)
     {
-     bool isBatteryok = true;
-     isBatteryok = ParameterInRange(min:0f,max:45f,value:temperature,threshholdPercent:tempThresholdPercent,errorMessage:"Temperature") && ParameterInRange(min:20f,max:80f,value:soc,threshholdPercent:socThresholdPercent,errorMessage:"State of Charge") && ParameterInRange(max:0.8f,value:chargeRate,threshholdPercent:chargeRateThresholdPercent,errorMessage:"Charge Rate");
-     return isBatteryok;
+        bool isTemperatureOk = ParameterInRange(min: 0f, max: 45f, value: temperature, threshholdPercent: tempThresholdPercent, errorMessage: "Temperature");
+        bool isSocOk = ParameterInRange(min: 20f, max: 80f, value: soc, threshholdPercent: socThresholdPercent, errorMessage: "State of Charge");
+        bool isChargeRateOk = ParameterInRange(max: 0.8f, value: chargeRate, threshholdPercent: chargeRateThresholdPercent, errorMessage: "Charge Rate");
+
+    return isTemperatureOk && isSocOk && isChargeRateOk;
     }
 
     
