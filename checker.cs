@@ -51,11 +51,6 @@ namespace paradigm_shift_csharp
             {
                 Console.WriteLine("{0} is {1} threshold!", errorMessage, value < min + thresholdNumber ? "below" : "above");
             }
-}
-
-        static bool isInThresholdRange(float max,float value,float ?min = null)
-        {
-           return (min.HasValue && value < min + thresholdNumber) || value > max - thresholdNumber;
         }
         static void ExpectTrue(bool expression)
         {
