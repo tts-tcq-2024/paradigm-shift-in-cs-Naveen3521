@@ -40,7 +40,7 @@ the abnormal measure and the breach -
 whether high or low. Add this capability.
 
 
-###Feature Extension
+##Feature Extension
 1.Added Warning System which Display appropriate warning messages when charge rate ,soc,temperarture is reaching near the minimum and maximum range.(Addded new threshold percent for charge rate,temperature,soc)
 2.Warning minimum range,maximun for temmperature,soc is calculated by the formula:
 max range = max - max*(thresholdpercent/100)
