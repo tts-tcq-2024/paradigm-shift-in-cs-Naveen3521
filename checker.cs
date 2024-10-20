@@ -43,13 +43,11 @@ namespace paradigm_shift_csharp
             IMessageLogger logger = new ConsoleLogger();
             ParameterChecker parameterChecker = new ParameterChecker(logger);
             Checker checker = new Checker(parameterChecker);
-            // Test case where everything is in the valid range
-            ExpectTrue(checker.BatteryIsOk(25, 5, 70, 5, 0.7f, 5));
- 
-            // Test case where temperature and SOC are out of the valid range
-            ExpectFalse(checker.BatteryIsOk(50, 5, 85, 5, 0.0f, 5));
- 
-            Console.WriteLine("All tests passed");
+
+            // Run tests
+            CheckerTest.RunTests(checker);
+
+            Console.WriteLine("All tests completed.");
             return 0;
         }
     }
