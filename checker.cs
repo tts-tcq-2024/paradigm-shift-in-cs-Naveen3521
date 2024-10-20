@@ -1,63 +1,36 @@
 using System;
-using System.Diagnostics;
+
 namespace paradigm_shift_csharp
 {
-class Checker
-{
-    static bool batteryIsOk(float temperature, float soc, float chargeRate) {
-        return TemmperatureChecker(temperature) && SocChecker(soc) && ChargeRateChecker(chargeRate);
-    }
-
-    public static bool TemmperatureChecker(float temperature)
+    public class Checker
     {
-       bool isInRange = temperature>=0 && temperature<=45;
-        if(!isInRange)
-        {
-            Console.WriteLine("Temperature is out of range!");
-        }
-        return isInRange;
-    }
+        private readonly ParameterChecker _parameterChecker;
 
-    public static bool SocChecker(float soc)
-    {
-       bool isInRange = soc>=20 && soc<=80;
-        if(!isInRange)
+        public Checker(ParameterChecker parameterChecker)
         {
-            Console.WriteLine("State of Charge is out of range!");
+            _parameterChecker = parameterChecker;
         }
-        return isInRange;
-    }
 
-    public static bool ChargeRateChecker(float chargeRate)
-    {
-        bool isInRange = chargeRate<=0.8;
-        if(!isInRange)
+        public bool BatteryIsOk(float temperature, float tempThresholdPercent, float soc, float socThresholdPercent, float chargeRate, float chargeRateThresholdPercent)
         {
-            Console.WriteLine("Charge Rate is out of range!");
-        }
-        return isInRange;
-    }
-    
-    
+            bool isTemperatureOk = _parameterChecker.ParameterInRange(min:0f,max: 45f, value: temperature, thresholdPercent: tempThresholdPercent, errorMessage: "Temperature");
+            bool isSocOk = _parameterChecker.ParameterInRange(min:20f,max: 80f, value: soc, thresholdPercent: socThresholdPercent, errorMessage: "State of Charge");
+            bool isChargeRateOk = _parameterChecker.ParameterInRange(max: 0.8f, value: chargeRate, thresholdPercent: chargeRateThresholdPercent, errorMessage: "Charge Rate");
 
-    static void ExpectTrue(bool expression) {
-        if(!expression) {
-            Console.WriteLine("Expected true, but got false");
-            Environment.Exit(1);
+            return isTemperatureOk && isSocOk && isChargeRateOk;
+        }
+        
+        static int Main()
+        {
+            IMessageLogger logger = new ConsoleLogger();
+            ParameterChecker parameterChecker = new ParameterChecker(logger);
+            Checker checker = new Checker(parameterChecker);
+
+            // Run tests
+            CheckerTest.RunTests(checker);
+
+            Console.WriteLine("All tests completed.");
+            return 0;
         }
     }
-    static void ExpectFalse(bool expression) {
-        if(expression) {
-            Console.WriteLine("Expected false, but got true");
-            Environment.Exit(1);
-        }
-    }
-    static int Main() {
-        ExpectTrue(batteryIsOk(25, 70, 0.7f));
-        ExpectFalse(batteryIsOk(50, 85, 0.0f));
-        Console.WriteLine("All ok");
-        return 0;
-    }
-    
-}
 }

@@ -39,6 +39,14 @@ We will explore the charging phase of Li-ion batteries to start with.
 the abnormal measure and the breach -
 whether high or low. Add this capability.
 
+
+## Feature Extension
+
+- Added Warning System which Display appropriate warning messages when charge rate ,soc,temperarture is reaching near the minimum and maximum range.(Addded new threshold percent for charge rate,temperature,soc)
+- Warning minimum range,maximun for temmperature,soc is calculated by the formula:
+max range = max - max*(thresholdpercent/100)
+min range = min + min*(thresholdpercent/100)
+- for charge rate the max percent is only calculated
 ## The Exploration
 
 How well does our code hold-out in the rapidly evolving EV space?
