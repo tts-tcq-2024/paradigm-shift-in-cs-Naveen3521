@@ -5,7 +5,7 @@ namespace paradigm_shift_csharp
 {
     public static class CheckerTest
     {
-        public static void RunTests()
+        public static void RunTests(Checker checker)
         {
             IMessageLogger logger = new ConsoleLogger();
             ParameterChecker parameterChecker = new ParameterChecker(logger);
