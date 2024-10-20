@@ -77,7 +77,7 @@ namespace paradigm_shift_csharp
 
         private static void TestBatteryIsOk_ChargeRateReachingThreshold_LogsWarning(Checker batteryChecker, Mock<IMessageLogger> mockLogger)
         {
-            bool result = batteryChecker.BatteryIsOk(25, 5, 70, 5, 0.75f, 5); // Charge rate nearing threshold
+            bool result = batteryChecker.BatteryIsOk(25, 5, 70, 5, 0.78f, 5); // Charge rate nearing threshold
 
             mockLogger.Verify(logger => logger.LogWarning(It.Is<string>(s => s.Contains("Charge Rate is reaching threshold"))), Times.Once());
             if (!result) throw new Exception("Expected true, but got false");
