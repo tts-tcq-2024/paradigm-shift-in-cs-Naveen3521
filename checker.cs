@@ -40,10 +40,9 @@ namespace paradigm_shift_csharp
 
         static int Main()
         {
-            // Create an instance of ParameterChecker
-            ParameterChecker parameterChecker = new ParameterChecker(); // Assuming this has a parameterless constructor
-            Checker checker = new Checker(parameterChecker); // Create an instance of Checker
-
+            IMessageLogger logger = new ConsoleMessageLogger();
+            ParameterChecker parameterChecker = new ParameterChecker(logger);
+            Checker checker = new Checker(parameterChecker);
             // Test case where everything is in the valid range
             ExpectTrue(checker.BatteryIsOk(25, 5, 70, 5, 0.7f, 5));
  
