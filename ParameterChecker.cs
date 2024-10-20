@@ -18,7 +18,7 @@ namespace paradigm_shift_csharp
             if (!isInRange)
                 _logger.LogError($"{errorMessage} is out of range!");
             else if(IsOutOfThresholdRange(value,max,thresholdNumber,min))
-                _logger.LogWarning("{errorMessage} is reaching threshold");
+                _logger.LogWarning($"{errorMessage} is reaching threshold");
             return isInRange;
         }
 
