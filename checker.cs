@@ -41,10 +41,10 @@ namespace paradigm_shift_csharp
         static int Main()
         {
             // Test case where everything is in the valid range
-            ExpectTrue(batteryIsOk(25, 5, 70, 5, 0.7f, 5));
+            ExpectTrue(BatteryIsOk(25, 5, 70, 5, 0.7f, 5));
  
             // Test case where temperature and SOC are out of the valid range
-            ExpectFalse(batteryIsOk(50, 5, 85, 5, 0.0f, 5));
+            ExpectFalse(BatteryIsOk(50, 5, 85, 5, 0.0f, 5));
  
             Console.WriteLine("All tests passed");
             return 0;
