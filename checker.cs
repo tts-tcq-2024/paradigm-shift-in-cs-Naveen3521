@@ -40,7 +40,7 @@ namespace paradigm_shift_csharp
 
         static int Main()
         {
-            IMessageLogger logger = new ConsoleMessageLogger();
+            IMessageLogger logger = new ConsoleLogger();
             ParameterChecker parameterChecker = new ParameterChecker(logger);
             Checker checker = new Checker(parameterChecker);
             // Test case where everything is in the valid range
