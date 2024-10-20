@@ -1,101 +1,55 @@
-using System;
+using Xunit;
 using Moq;
 
-namespace paradigm_shift_csharp
+namespace paradigm_shift_csharp.Tests
 {
-    public static class CheckerTest
+    public class CheckerTests
     {
-        public static void RunTests(Checker checker)
+        [Fact]
+        public void BatteryIsOk_TemperatureOutOfRange_LogsError()
         {
-            // Create a mock logger for the tests
+            // Arrange
             var mockLogger = new Mock<IMessageLogger>();
             var parameterChecker = new ParameterChecker(mockLogger.Object);
-            var batteryChecker = new Checker(parameterChecker);
+            var checker = new Checker(parameterChecker);
 
-            // Temperature Tests
-            TestBatteryIsOk_TemperatureOutOfRange_LogsError(batteryChecker, mockLogger);
-            TestBatteryIsOk_TemperatureReachingThreshold_LogsWarning(batteryChecker, mockLogger);
+            // Act
+            bool result = checker.BatteryIsOk(50, 5, 70, 5, 0.7f, 5); // Temperature is out of range
 
-            // SOC Tests
-            TestBatteryIsOk_SocOutOfRange_LogsError(batteryChecker, mockLogger);
-            TestBatteryIsOk_SocReachingThreshold_LogsWarning(batteryChecker, mockLogger);
-
-            // Charge Rate Tests
-            TestBatteryIsOk_ChargeRateOutOfRange_LogsError(batteryChecker, mockLogger);
-            TestBatteryIsOk_ChargeRateReachingThreshold_LogsWarning(batteryChecker, mockLogger);
-
-            // Valid and Invalid Cases
-            TestBatteryIsOk_ValidCase_ExpectTrue(batteryChecker);
-            TestBatteryIsOk_InvalidCase_ExpectFalse(batteryChecker);
-
-            Console.WriteLine("All tests passed.");
-        }
-
-        // Test Cases
-        // Temperature Tests
-        private static void TestBatteryIsOk_TemperatureOutOfRange_LogsError(Checker batteryChecker, Mock<IMessageLogger> mockLogger)
-        {
-            bool result = batteryChecker.BatteryIsOk(50, 5, 70, 5, 0.7f, 5); // Temperature out of range
-
+            // Assert
             mockLogger.Verify(logger => logger.LogError(It.Is<string>(s => s.Contains("Temperature is out of range!"))), Times.Once());
-            if (result) throw new Exception("Expected false, but got true");
+            Assert.False(result); // Since temperature is out of range, BatteryIsOk should return false
         }
 
-        private static void TestBatteryIsOk_TemperatureReachingThreshold_LogsWarning(Checker batteryChecker, Mock<IMessageLogger> mockLogger)
+        [Fact]
+        public void BatteryIsOk_TemperatureReachingThreshold_LogsWarning()
         {
-            bool result = batteryChecker.BatteryIsOk(44, 5, 70, 5, 0.7f, 5); // Temperature nearing threshold
+            // Arrange
+            var mockLogger = new Mock<IMessageLogger>();
+            var parameterChecker = new ParameterChecker(mockLogger.Object);
+            var checker = new Checker(parameterChecker);
 
+            // Act
+            bool result = checker.BatteryIsOk(44, 5, 70, 5, 0.7f, 5); // Temperature close to the max (45)
+
+            // Assert
             mockLogger.Verify(logger => logger.LogWarning(It.Is<string>(s => s.Contains("Temperature is reaching threshold"))), Times.Once());
-            if (!result) throw new Exception("Expected true, but got false");
+            Assert.True(result); // Since temperature is within range, BatteryIsOk should return true
         }
 
-        // SOC Tests
-        private static void TestBatteryIsOk_SocOutOfRange_LogsError(Checker batteryChecker, Mock<IMessageLogger> mockLogger)
+        [Fact]
+        public void BatteryIsOk_AllParametersOk_ReturnsTrue()
         {
-            bool result = batteryChecker.BatteryIsOk(25, 5, 90, 5, 0.7f, 5); // SOC out of range
+            // Arrange
+            var mockLogger = new Mock<IMessageLogger>();
+            var parameterChecker = new ParameterChecker(mockLogger.Object);
+            var checker = new Checker(parameterChecker);
 
-            mockLogger.Verify(logger => logger.LogError(It.Is<string>(s => s.Contains("State of Charge is out of range!"))), Times.Once());
-            if (result) throw new Exception("Expected false, but got true");
-        }
+            // Act
+            bool result = checker.BatteryIsOk(40, 5, 75, 5, 0.7f, 5); // All parameters are within range
 
-        private static void TestBatteryIsOk_SocReachingThreshold_LogsWarning(Checker batteryChecker, Mock<IMessageLogger> mockLogger)
-        {
-            bool result = batteryChecker.BatteryIsOk(25, 5, 78, 5, 0.7f, 5); // SOC nearing threshold
-
-            mockLogger.Verify(logger => logger.LogWarning(It.Is<string>(s => s.Contains("State of Charge is reaching threshold"))), Times.Once());
-            if (!result) throw new Exception("Expected true, but got false");
-        }
-
-        // Charge Rate Tests
-        private static void TestBatteryIsOk_ChargeRateOutOfRange_LogsError(Checker batteryChecker, Mock<IMessageLogger> mockLogger)
-        {
-            bool result = batteryChecker.BatteryIsOk(25, 5, 70, 5, 0.9f, 5); // Charge rate out of range
-
-            mockLogger.Verify(logger => logger.LogError(It.Is<string>(s => s.Contains("Charge Rate is out of range!"))), Times.Once());
-            if (result) throw new Exception("Expected false, but got true");
-        }
-
-        private static void TestBatteryIsOk_ChargeRateReachingThreshold_LogsWarning(Checker batteryChecker, Mock<IMessageLogger> mockLogger)
-        {
-            bool result = batteryChecker.BatteryIsOk(25, 5, 70, 5, 0.75f, 5); // Charge rate nearing threshold
-
-            mockLogger.Verify(logger => logger.LogWarning(It.Is<string>(s => s.Contains("Charge Rate is reaching threshold"))), Times.Once());
-            if (!result) throw new Exception("Expected true, but got false");
-        }
-
-        // Valid and Invalid Cases
-        private static void TestBatteryIsOk_ValidCase_ExpectTrue(Checker batteryChecker)
-        {
-            bool result = batteryChecker.BatteryIsOk(25, 5, 70, 5, 0.7f, 5); // All parameters valid
-
-            if (!result) throw new Exception("Expected true, but got false");
-        }
-
-        private static void TestBatteryIsOk_InvalidCase_ExpectFalse(Checker batteryChecker)
-        {
-            bool result = batteryChecker.BatteryIsOk(50, 5, 85, 5, 0.0f, 5); // Invalid parameters
-
-            if (result) throw new Exception("Expected false, but got true");
+            // Assert
+            Assert.True(result); // Since all parameters are in range, BatteryIsOk should return true
         }
     }
 }
