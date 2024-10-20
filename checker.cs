@@ -37,14 +37,18 @@ namespace paradigm_shift_csharp
                 Environment.Exit(1);
             }
         }
- 
+
         static int Main()
         {
+            // Create an instance of ParameterChecker
+            ParameterChecker parameterChecker = new ParameterChecker(); // Assuming this has a parameterless constructor
+            Checker checker = new Checker(parameterChecker); // Create an instance of Checker
+
             // Test case where everything is in the valid range
-            ExpectTrue(BatteryIsOk(25, 5, 70, 5, 0.7f, 5));
+            ExpectTrue(checker.BatteryIsOk(25, 5, 70, 5, 0.7f, 5));
  
             // Test case where temperature and SOC are out of the valid range
-            ExpectFalse(BatteryIsOk(50, 5, 85, 5, 0.0f, 5));
+            ExpectFalse(checker.BatteryIsOk(50, 5, 85, 5, 0.0f, 5));
  
             Console.WriteLine("All tests passed");
             return 0;
