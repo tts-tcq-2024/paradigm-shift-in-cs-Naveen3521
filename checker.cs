@@ -19,5 +19,35 @@ namespace paradigm_shift_csharp
 
             return isTemperatureOk && isSocOk && isChargeRateOk;
         }
+
+        static void ExpectTrue(bool expression)
+        {
+            if (!expression)
+            {
+                Console.WriteLine("Expected true, but got false");
+                Environment.Exit(1);
+            }
+        }
+ 
+        static void ExpectFalse(bool expression)
+        {
+            if (expression)
+            {
+                Console.WriteLine("Expected false, but got true");
+                Environment.Exit(1);
+            }
+        }
+ 
+        static int Main()
+        {
+            // Test case where everything is in the valid range
+            ExpectTrue(batteryIsOk(25, 5, 70, 5, 0.7f, 5));
+ 
+            // Test case where temperature and SOC are out of the valid range
+            ExpectFalse(batteryIsOk(50, 5, 85, 5, 0.0f, 5));
+ 
+            Console.WriteLine("All tests passed");
+            return 0;
+        }
     }
 }
