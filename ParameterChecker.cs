@@ -14,7 +14,7 @@ namespace paradigm_shift_csharp
         public bool ParameterInRange(float max, float value, float thresholdPercent, string errorMessage, float? min = null)
         {
             var thresholdNumber = CalculateThresholdNumber(thresholdPercent, max);
-            bool isInRange = CheckInRange(max, value, thresholdNumber, errorMessage, min);
+            bool isInRange = CheckInRange(max, value, errorMessage, min);
             if (!isInRange)
                 _logger.LogError($"{errorMessage} is out of range!");
             else if(IsOutOfThresholdRange(value,max,thresholdNumber,min))
@@ -22,7 +22,7 @@ namespace paradigm_shift_csharp
             return isInRange;
         }
 
-        private bool CheckInRange(float max, float value, float thresholdNumber, string errorMessage, float? min = null)
+        private bool CheckInRange(float max, float value, string errorMessage, float? min = null)
         {
             if (min.HasValue)
                 return value >= min && value <= max;
